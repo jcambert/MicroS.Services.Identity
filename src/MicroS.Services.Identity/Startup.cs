@@ -9,6 +9,7 @@ using MicroS_Common.Jeager;
 using MicroS_Common.Mongo;
 using MicroS_Common.Mvc;
 using MicroS_Common.RabbitMq;
+using MicroS_Common.Redis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,7 @@ namespace MicroS.Services.Identity
             services.AddJwt();
             services.AddJaeger();
             //services.AddOpenTracing();
-            //services.AddRedis();
+            services.AddRedis();
             services.AddInitializers(typeof(IMongoDbInitializer));
             services.AddCors(options =>
             {
@@ -41,7 +42,7 @@ namespace MicroS.Services.Identity
                         cors.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            .AllowCredentials()
+                            //.AllowCredentials()
                             .WithExposedHeaders(Headers));
             });
         }

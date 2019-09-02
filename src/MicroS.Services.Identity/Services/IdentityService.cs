@@ -86,10 +86,5 @@ namespace MicroS.Services.Identity.Services
             await _userRepository.UpdateAsync(user);
             await _busPublisher.PublishAsync(new PasswordChanged(userId), CorrelationContext.Empty);
         }
-
-        Task<JsonWebToken> IIdentityService.SignInAsync(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
