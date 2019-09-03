@@ -39,10 +39,11 @@ namespace MicroS.Services.Identity
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", cors =>
-                        cors.AllowAnyOrigin()
+                        cors
+                        //.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
-                            //.AllowCredentials()
+                            .AllowCredentials()
                             .WithExposedHeaders(Headers));
             });
         }
