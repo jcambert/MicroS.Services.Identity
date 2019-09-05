@@ -24,7 +24,7 @@ namespace MicroS.Services.Identity
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    //.UseLogging()
+                    .UseLogging()
                     //.UseVault()
                     //.UseLockbox()
                     //.UseAppMetrics(); 

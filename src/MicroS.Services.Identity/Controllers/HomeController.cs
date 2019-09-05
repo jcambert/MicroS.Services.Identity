@@ -7,5 +7,9 @@ namespace MicroS.Services.Identity.Controllers
     {
         [HttpGet]
         public IActionResult Get() => Ok("DShop Identity Service");
+
+        [HttpGet("ping")]
+        [HttpHead()]
+        public IActionResult Ping() => Ok("ok");
     }
 }

@@ -12,10 +12,10 @@ using MicroS_Common.RabbitMq;
 using MicroS_Common.Redis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace MicroS.Services.Identity
@@ -46,6 +46,7 @@ namespace MicroS.Services.Identity
                             .AllowCredentials()
                             .WithExposedHeaders(Headers));
             });
+            //services.AddHostedService<LifetimeEventsHostedService>();
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -62,7 +63,7 @@ namespace MicroS.Services.Identity
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, IStartupInitializer initializer
-            , IConsulClient consulClient)
+            , IConsulClient consulClient,ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -78,15 +79,22 @@ namespace MicroS.Services.Identity
             app.UseServiceId();
             app.UseMvc();
             app.UseRabbitMq();
-
             var consulServiceId = app.UseConsul();
             applicationLifetime.ApplicationStopped.Register(() =>
             {
                 consulClient.Agent.ServiceDeregister(consulServiceId);
                
             });
+            applicationLifetime.ApplicationStarted.Register(() =>
+            {
+                logger.LogInformation("Micro Service Identity is started");
+            });
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                logger.LogInformation("Micro Service Identity is being stopping");
+            });
 
-            initializer.InitializeAsync();
+
         }
     }
 }
