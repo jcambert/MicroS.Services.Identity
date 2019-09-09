@@ -40,7 +40,7 @@ namespace MicroS.Services.Identity
             {
                 options.AddPolicy("CorsPolicy", cors =>
                         cors
-                        //.AllowAnyOrigin()
+                            //.AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials()
