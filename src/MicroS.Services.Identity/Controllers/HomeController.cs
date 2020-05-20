@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MicroS_Common.Controllers;
+using MicroS_Common.Dispatchers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace MicroS.Services.Identity.Controllers
 {
     [Route("")]
-    public class HomeController : ControllerBase
+    public class HomeController : BaseController
     {
-        [HttpGet]
-        public IActionResult Get() => Ok("DShop Identity Service");
-
-        [HttpGet("ping")]
-        [HttpHead()]
-        public IActionResult Ping() => Ok("ok");
+        public HomeController(IDispatcher dispatcher, IConfiguration configuration) : base(dispatcher, configuration)
+        {
+        }
     }
 }
